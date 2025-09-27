@@ -11,11 +11,11 @@ return new class extends Migration
         $table = config('files.table', 'laravel_files_table');
 
         Schema::create($table, function (Blueprint $table) {
-            $table->uuid();
+            $table->ulid();
             $table->text('disk');
             $table->string('name');
             $table->text('path');
-            $table->morphs('fileable');
+            $table->ulidMorphs('fileable');
             $table->timestamps();
             $table->softDeletes();
         });
