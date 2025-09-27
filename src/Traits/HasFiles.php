@@ -13,12 +13,16 @@ trait HasFiles
         return $this->morphMany(config('files.model', File::class), 'fileable');
     }
 
-    public function addFile(UploadedFile $file, string $disk = 'public'): File
+    public function addFile(UploadedFile $file, ?string $name = null): File
     {
+        $name = $name ?? $file->getClientOriginalName();
+
+        $real_file = $file->store('', ['disk' => config('files.disk')]);
+
         return $this->files()->create([
-            'disk' => $disk,
-            'name' => $file->getClientOriginalName(),
-            'path' => $file->storePublicly('', ['disk' => $disk]),
+            'disk' => config('files.disk'),
+            'name' => $name,
+            'path' => $real_file,
         ]);
     }
 }
