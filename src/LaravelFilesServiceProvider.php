@@ -2,9 +2,9 @@
 
 namespace SextaNet\LaravelFiles;
 
+use SextaNet\LaravelFiles\Commands\LaravelFilesCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use SextaNet\LaravelFiles\Commands\LaravelFilesCommand;
 
 class LaravelFilesServiceProvider extends PackageServiceProvider
 {
