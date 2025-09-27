@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Storage;
 beforeEach(function () {
     Storage::fake('public');
 
-    $this->model = new class extends \Illuminate\Database\Eloquent\Model {
+    $this->model = new class extends \Illuminate\Database\Eloquent\Model
+    {
         use \SextaNet\LaravelFiles\Traits\HasFiles;
     };
 });

@@ -2,7 +2,8 @@
 
 namespace SextaNet\LaravelFiles;
 
-class LaravelFiles {
+class LaravelFiles
+{
     public function setDisk(string $disk): void
     {
         config(['files.disk' => $disk]);
