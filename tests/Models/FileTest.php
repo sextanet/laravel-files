@@ -12,8 +12,7 @@ beforeEach(function () {
     $this->model = fake_model();
 
     $this->file = $this->model->addFile(
-        UploadedFile::fake()->image('photo.jpg'),
-        'local'
+        UploadedFile::fake()->image('photo.jpg')
     );
 });
 
@@ -27,7 +26,12 @@ it('can get the url', function () {
         ->toBe(Storage::disk('local')->url($this->file->path));
 });
 
-it('can get the temporary url', function () {
+it('can get the temporary url with specific minutes', function () {
+    expect($this->file->getTemporaryUrl(20))
+        ->toBe(Storage::disk('local')->temporaryUrl($this->file->path, now()->addMinutes(20)));
+});
+
+it('can get the temporary url with default minutes', function () {
     expect($this->file->getTemporaryUrl())
         ->toBe(Storage::disk('local')->temporaryUrl($this->file->path, now()->addMinutes(5)));
 });

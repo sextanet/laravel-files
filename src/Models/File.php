@@ -28,9 +28,9 @@ class File extends Model
         return Storage::disk($this->disk)->url($this->path);
     }
 
-    public function getTemporaryUrl(): string
+    public function getTemporaryUrl(?int $minutes = 5): string
     {
         return Storage::disk($this->disk)
-            ->temporaryUrl($this->path, now()->addMinutes(5));
+            ->temporaryUrl($this->path, now()->addMinutes($minutes));
     }
 }
