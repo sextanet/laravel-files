@@ -9,6 +9,11 @@ class LaravelFiles
         config(['files.disk' => $disk]);
     }
 
+    public function setTemporaryUrlMinutes(int $minutes): void
+    {
+        config(['files.temporary_url_minutes' => $minutes]);
+    }
+
     public function setTable(string $table): void
     {
         config(['files.table' => $table]);

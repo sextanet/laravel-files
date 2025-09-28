@@ -63,28 +63,29 @@ $temporary_url = $file->temporaryUrl();
 
 ### Advanced usage
 
-Passing a diffirent disk
-
-```php
-config(['files.disk' => 's3']);
-
-$uploaded_file = request()->your_file;
-
-$file = $user->addFile($uploaded_file, 'new_name'); // will upload into s3 disk
-```
-
 Passing custom minutes in each implementation
 
 ```php
 $temporary_url = $file->getTemporaryUrl(20); // 20 minutes
 ```
 
+Passing a different disk in a specific instance
+
+### Global uses
+
 Passing custom minutes globally
 
 ```php
-config(['files.default_temporary_url_minutes' => 60]);
+// First of all, import the LaravelFiles facade
 
-$temporary_url = $file->getTemporaryUrl(); // 60 minutes
+use SextaNet\LaravelFiles\Facades\LaravelFiles;
+
+// Set temporary URL for 120 minutes
+LaravelFiles::setTemporaryUrlMinutes(120);
+$temporary_url = $file->getTemporaryUrl(); // Will return 120 minutes
+
+// Store on another disk, like s3
+LaravelFiles::setDisk('s3');
 ```
 
 ### Passing types
