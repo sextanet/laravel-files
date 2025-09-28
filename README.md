@@ -23,11 +23,15 @@ php artisan migrate
 ## Usage
 
 ```php
+use SextaNet\LaravelFiles\Traits\HasFiles; // 👈 Import the Trait
+
 class YourModel extends Model
 {
-    use HasFiles; // Use in each model as you need
+    use HasFiles; // 👈 Use it
 }
 ```
+
+You can reuse it in each model, any times!
 
 ### Store
 
@@ -37,12 +41,12 @@ $uploaded_file = request()->your_file;
 $file = $user->addFile($uploaded_file); // using your default disk from config/filesystems.php
 ```
 
-Or passing a specific disk, for example: `public`
+Or passing the name, for example: `new_name`, will preserve the extension, so, it will generate `new_name.mp4`
 
 ```php
-$uploaded_file = request()->your_file;
+$uploaded_file = request()->your_file; // let's supose you have "a_video.mp4"
 
-$file = $user->addFile($uploaded_file, 'public');
+$file = $user->addFile($uploaded_file, 'new_name'); // will generate new_name.mp4
 ```
 
 ### Get
@@ -59,6 +63,16 @@ $temporary_url = $file->getTemporaryUrl();
 
 ### Advanced usage
 
+Passing a diffirent disk
+
+```php
+config(['files.disk' => 's3']);
+
+$uploaded_file = request()->your_file;
+
+$file = $user->addFile($uploaded_file, 'new_name'); // will upload into s3 disk
+```
+
 Passing custom minutes in each implementation
 
 ```php
@@ -73,10 +87,19 @@ config(['files.default_temporary_url_minutes' => 60]);
 $temporary_url = $file->getTemporaryUrl(); // 60 minutes
 ```
 
-### .env
+### Custom keys
+
+By default, it uses your CURRENT_DISK in your `.env` file. If you want to force to use different values, you can add these keys:
+
+Another disk:
+
 ```dotenv
-FILES_TABLE=files
-FILES_DISK=local
+FILES_DISK=s3
+```
+
+Custom minutes:
+
+```dotenv
 FILES_TEMPORARY_URL_MINUTES=5
 ```
 

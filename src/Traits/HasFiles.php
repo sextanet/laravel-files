@@ -12,12 +12,21 @@ trait HasFiles
         return $this->morphMany(File::class, 'fileable');
     }
 
-    public function storeUploadedFile(UploadedFile $file, ?string $name = null)
+    public function generateName(UploadedFile $file, ?string $name = null): string
     {
         $name = $name ?? $file->getClientOriginalName();
+        $extension = $file->getClientOriginalExtension() ?? '';
+
+        return $name.'.'.$extension;
+    }
+
+    public function storeUploadedFile(UploadedFile $file, ?string $name = null)
+    {
+        $name_with_extension = $this->generateName($file, $name);
 
         return $file->store('', [
             'disk' => config('files.disk'),
+            'name' => $name_with_extension,
         ]);
     }
 
