@@ -7,6 +7,11 @@
 
 Upload seamless Storage and Database files in Laravel
 
+It supports:
+- [Native Laravel filesystems](https://laravel.com/docs/12.x/filesystem), such as `public`, `local`, `s3` disks
+- Also [Local Temporary URLs ](https://laravel.com/docs/12.x/filesystem#enabling-local-temporary-urls)
+- And [Scoped disks](https://laravel.com/docs/12.x/filesystem#scoped-and-read-only-filesystems)
+
 ## Installation
 
 ```bash
