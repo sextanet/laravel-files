@@ -38,7 +38,7 @@ class YourModel extends Model
 
 We're ready! You can reuse it in each model, any times!
 
-### Store
+### Add (and Store)
 
 ```php
 $uploaded_file = request()->your_file;
@@ -66,6 +66,8 @@ $url = $file->url();
 $temporary_url = $file->temporaryUrl();
 ```
 
+## Advanced usage
+
 ### Passing a type
 
 Type doesn't represent a real type or mimetype, it's only an optional field
@@ -80,34 +82,39 @@ $user->addFile($uploaded_file, type: 'document');
 $user->files()->type('document')->get();
 ```
 
-### Advanced usage
-
-Passing custom minutes in each implementation
+### Passing custom minutes in each implementation
 
 ```php
 $temporary_url = $file->getTemporaryUrl(20); // 20 minutes
 ```
 
-Passing a different disk in a specific instance
+## Global usage
 
-### Global uses
-
-Passing custom minutes globally
+### Passing custom minutes globally
 
 ```php
-// First of all, import the LaravelFiles facade
-
+// Don't forget to import the LaravelFiles facade
 use SextaNet\LaravelFiles\Facades\LaravelFiles;
 
 // Set temporary URL for 120 minutes
 LaravelFiles::setTemporaryUrlMinutes(120);
+
 $temporary_url = $file->getTemporaryUrl(); // Will return 120 minutes
+
+```
+
+
+### Passing a different disk in a specific instance
+
+```php
+// Don't forget to import the LaravelFiles facade
+use SextaNet\LaravelFiles\Facades\LaravelFiles;
 
 // Store on another disk, like s3
 LaravelFiles::setDisk('s3');
 ```
 
-### Custom keys
+## Custom keys
 
 By default, it uses your CURRENT_DISK in your `.env` file. If you want to force to use different values, you can add these keys:
 
