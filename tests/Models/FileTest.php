@@ -42,36 +42,36 @@ it('can get the temporary url with default forced minutes', function () {
 });
 
 describe('generate names', function () {
-    it('can generate name without extension', function () {
+    test('can generate name without extension', function () {
         expect($this->file->generateNameWithoutExtension('photo.jpg'))
             ->toBe('photo');
     });
 
-    it('can generate extension', function () {
+    test('can generate extension', function () {
         expect($this->file->generateExtension('photo.jpg'))
             ->toBe('jpg');
     });
 
-    it('can generate name with extension', function () {
+    test('can generate name with extension', function () {
         expect($this->file->generateNameWithExtension('photo.jpg'))
             ->toBe('photo.jpg');
     });
-})->only();
+});
 
-describe('download files', function () {
-    it('can download without a name', function () {
-        $response = $this->file->download();
+describe('download preserving extension', function () {
+    test('without a name', function () {
+        $response = $this->file->download(preserveExtension: true);
 
         $name = $this->file->path;
 
         expect($response->headers->get('content-disposition'))
-            ->toContain("attachment; filename={$name}");
+            ->toContain("attachment; filename={$name}.jpg");
     });
 
-    it('can download with a name', function () {
-        $response = $this->file->download('name');
+    test('with a name', function () {
+        $response = $this->file->download('name', preserveExtension: true);
 
         expect($response->headers->get('content-disposition'))
-            ->toContain('attachment; filename=name');
+            ->toContain('attachment; filename=name.jpg');
     });
-})->todo('Implement when names are ready');
+});
