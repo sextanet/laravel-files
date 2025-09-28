@@ -1,9 +1,7 @@
 <?php
 
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use SextaNet\LaravelFiles\Models\File;
 
 beforeEach(function () {
     Storage::fake('local');
