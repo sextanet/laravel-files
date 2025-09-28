@@ -25,7 +25,7 @@ if (! function_exists('file_override_name_but_preserve_extension')) {
     function file_override_name_but_preserve_extension(string $original_name, ?string $new_name): string
     {
         if (! $new_name) {
-            return file_remove_extension($original_name).'.'.file_get_extension($original_name);
+            return file_name_with_extension($original_name);
         }
 
         $extension = file_get_extension($original_name);
