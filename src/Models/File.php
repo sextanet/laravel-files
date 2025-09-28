@@ -11,6 +11,12 @@ class File extends Model
 
     protected $table;
 
+    // public $disk;
+
+    // public $path;
+
+    // public $name;
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -18,23 +24,25 @@ class File extends Model
         $this->table = config('files.table', 'files');
     }
 
-    public function getPath(): string
+    public function path(): string
     {
-        return Storage::disk($this->disk)->path($this->path);
+        return Storage::disk(
+            $this->attributes['disk'])->path($this->attributes['path']
+            );
     }
 
-    public function getUrl(): string
+    public function url(): string
     {
-        return Storage::disk($this->disk)->url($this->path);
+        return Storage::disk($this->attributes['disk'])->url($this->attributes['path']);
     }
 
-    public function getTemporaryUrl(int $minutes = 0): string
+    public function temporaryUrl(int $minutes = 0): string
     {
         if ($minutes === 0) {
             $minutes = config('files.temporary_url_minutes');
         }
 
-        return Storage::disk($this->disk)
-            ->temporaryUrl($this->path, now()->addMinutes($minutes));
+        return Storage::disk($this->attributes['disk'])
+            ->temporaryUrl($this->attributes['path'], now()->addMinutes($minutes));
     }
 }
