@@ -15,12 +15,12 @@ trait HasFiles
     public function generateName(UploadedFile $file, ?string $name = null): string
     {
         $name = $name ?? $file->getClientOriginalName();
-        $extension = $file->getClientOriginalExtension() ?? '';
+        $extension = $file->getClientOriginalExtension();
 
         return $name.'.'.$extension;
     }
 
-    public function generatePath(): ?string
+    public function generatePath(): string
     {
         return '';
     }

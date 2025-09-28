@@ -11,12 +11,6 @@ class File extends Model
 
     protected $table;
 
-    // public $disk;
-
-    // public $path;
-
-    // public $name;
-
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
