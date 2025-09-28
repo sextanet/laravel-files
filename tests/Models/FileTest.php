@@ -45,7 +45,7 @@ describe('download preserving extension', function () {
     test('without a name', function () {
         $response = $this->file->download(preserveExtension: true);
 
-        $name = $this->file->path;
+        $name = file_remove_extension($this->file->path);
 
         expect($response->headers->get('content-disposition'))
             ->toContain("attachment; filename={$name}.jpg");
