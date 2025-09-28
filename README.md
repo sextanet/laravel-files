@@ -66,6 +66,23 @@ $url = $file->url();
 $temporary_url = $file->temporaryUrl();
 ```
 
+### Download
+
+Without parameters
+
+```php
+return $file->download();
+```
+
+With custom parameters
+
+```php
+$name = 'custom_name';
+$headers = [];
+
+return $file->download($name, $headers);
+```
+
 ## Advanced usage
 
 ### Passing a type
