@@ -54,11 +54,11 @@ $file = $user->addFile($uploaded_file, 'new_name'); // will generate new_name.mp
 You can get the `path`, `url` and `temporary_url` for each file
 
 ```php
-$path = $file->getPath();
+$path = $file->path();
 
-$url = $file->getUrl();
+$url = $file->url();
 
-$temporary_url = $file->getTemporaryUrl();
+$temporary_url = $file->temporaryUrl();
 ```
 
 ### Advanced usage

@@ -20,11 +20,16 @@ trait HasFiles
         return $name.'.'.$extension;
     }
 
+    public function generatePath(): ?string
+    {
+        return '';
+    }
+
     public function storeUploadedFile(UploadedFile $file, ?string $name = null)
     {
         $name_with_extension = $this->generateName($file, $name);
 
-        return $file->store('', [
+        return $file->store($this->generatePath(), [
             'disk' => config('files.disk'),
             'name' => $name_with_extension,
         ]);
