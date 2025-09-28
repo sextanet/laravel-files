@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('path');
             $table->ulidMorphs('fileable');
+            $table->string('type')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -87,6 +87,20 @@ config(['files.default_temporary_url_minutes' => 60]);
 $temporary_url = $file->getTemporaryUrl(); // 60 minutes
 ```
 
+### Passing types
+
+Passing a type
+
+```php
+$uploaded_file = request()->your_file;
+
+// Store
+$user->addFile($uploaded_file, type: 'profile_photo');
+
+// Get
+$user->files()->type('image')->get();
+```
+
 ### Custom keys
 
 By default, it uses your CURRENT_DISK in your `.env` file. If you want to force to use different values, you can add these keys:

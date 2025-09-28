@@ -35,7 +35,7 @@ trait HasFiles
         ]);
     }
 
-    public function addFile(UploadedFile $file, ?string $name = null): File
+    public function addFile(UploadedFile $file, ?string $name = null, ?string $type = null): File
     {
         $name = $name ?? $file->getClientOriginalName();
 
@@ -45,6 +45,7 @@ trait HasFiles
             'disk' => config('files.disk'),
             'name' => $name,
             'path' => $uploaded_file,
+            'type' => $type,
         ]);
     }
 }

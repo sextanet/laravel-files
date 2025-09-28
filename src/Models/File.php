@@ -2,6 +2,7 @@
 
 namespace SextaNet\LaravelFiles\Models;
 
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Support\Facades\Storage;
 
@@ -36,5 +37,10 @@ class File extends Model
 
         return Storage::disk($this->attributes['disk'])
             ->temporaryUrl($this->attributes['path'], now()->addMinutes($minutes));
+    }
+
+    public function scopeType(Builder $query, string $type)
+    {
+        return $query->where('type', $type);
     }
 }

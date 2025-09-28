@@ -19,7 +19,7 @@ it('has many files', function () {
     );
 });
 
-test('can add a file', function () {
+test('add a file', function () {
     $file = $this->model->addFile(
         UploadedFile::fake()->image('photo.jpg'),
         'public'
@@ -27,4 +27,17 @@ test('can add a file', function () {
 
     expect($file)
         ->toBeInstanceOf(File::class);
+});
+
+test('add a file with type field', function () {
+    $this->model->addFile(
+        UploadedFile::fake()->image('photo.jpg'),
+        type: 'image',
+    );
+
+    expect($this->model->files()->type('image')->count())
+        ->toBe(1);
+
+    expect($this->model->files()->type('another')->count())
+        ->toBe(0);
 });
