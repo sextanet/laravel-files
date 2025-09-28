@@ -1,59 +1,132 @@
-# This is my package laravel-files
+# Laravel Files
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/sextanet/laravel-files.svg?style=flat-square)](https://packagist.org/packages/sextanet/laravel-files)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/sextanet/laravel-files/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/sextanet/laravel-files/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/sextanet/laravel-files/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/sextanet/laravel-files/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/sextanet/laravel-files.svg?style=flat-square)](https://packagist.org/packages/sextanet/laravel-files)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+Upload seamless Storage and Database files in Laravel
 
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-files.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-files)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+It supports:
+- [Native Laravel filesystems](https://laravel.com/docs/12.x/filesystem), such as `public`, `local`, `s3` disks
+- [Local Temporary URLs ](https://laravel.com/docs/12.x/filesystem#enabling-local-temporary-urls)
+- [Scoped disks](https://laravel.com/docs/12.x/filesystem#scoped-and-read-only-filesystems)
 
 ## Installation
-
-You can install the package via composer:
 
 ```bash
 composer require sextanet/laravel-files
 ```
 
-You can publish and run the migrations with:
+Publish and run the migrations with:
 
 ```bash
 php artisan vendor:publish --tag="laravel-files-migrations"
 php artisan migrate
 ```
 
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="laravel-files-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-files-views"
-```
-
 ## Usage
 
 ```php
-$laravelFiles = new SextaNet\LaravelFiles();
-echo $laravelFiles->echoPhrase('Hello, SextaNet!');
+use SextaNet\LaravelFiles\HasFiles; // 👈 1. Import
+
+class YourModel extends Model
+{
+    use HasFiles; // 👈 2. Use it
+}
+```
+
+We're ready! You can reuse it in each model, any times!
+
+### Add (and Store)
+
+```php
+$uploaded_file = request()->your_file;
+
+$file = $user->addFile($uploaded_file); // using your default disk from config/filesystems.php
+```
+
+Or passing the name, for example: `new_name`, will preserve the extension, so, it will store as `new_name.mp4`
+
+```php
+$uploaded_file = request()->your_file; // let's supose you have "a_video.mp4"
+
+$file = $user->addFile($uploaded_file, 'new_name'); // will generate new_name.mp4
+```
+
+### Get
+
+You can get the `path`, `url` and `temporary_url` for each file
+
+```php
+$path = $file->path();
+
+$url = $file->url();
+
+$temporary_url = $file->temporaryUrl();
+```
+
+## Advanced usage
+
+### Passing a type
+
+Type doesn't represent a real type or mimetype, it's only an optional field
+
+```php
+$uploaded_file = request()->your_file;
+
+// Store
+$user->addFile($uploaded_file, type: 'document');
+
+// Get
+$user->files()->type('document')->get();
+```
+
+### Passing custom minutes in each implementation
+
+```php
+$temporary_url = $file->getTemporaryUrl(20); // 20 minutes
+```
+
+## Global usage
+
+### Passing custom minutes globally
+
+```php
+// Don't forget to import the LaravelFiles facade
+use SextaNet\LaravelFiles\Facades\LaravelFiles;
+
+// Set temporary URL for 120 minutes
+LaravelFiles::setTemporaryUrlMinutes(120);
+
+$temporary_url = $file->getTemporaryUrl(); // Will return 120 minutes
+
+```
+
+
+### Passing a different disk in a specific instance
+
+```php
+// Don't forget to import the LaravelFiles facade
+use SextaNet\LaravelFiles\Facades\LaravelFiles;
+
+// Store on another disk, like s3
+LaravelFiles::setDisk('s3');
+```
+
+## Custom keys
+
+By default, we use the same `CURRENT_DISK` that you have in your `.env` file. If you want to force to use different values, you can add these keys with different values:
+
+### Another disk
+```dotenv
+FILES_DISK=s3
+```
+
+### Custom minutes
+
+```dotenv
+FILES_TEMPORARY_URL_MINUTES=5
 ```
 
 ## Testing
@@ -65,19 +138,6 @@ composer test
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
-## Credits
-
-- [SextaNet](https://github.com/sextanet)
-- [All Contributors](../../contributors)
 
 ## License
 
