@@ -20,3 +20,12 @@ if (! function_exists('file_name_with_extension')) {
         return file_remove_extension($filename).'.'.file_get_extension($filename);
     }
 }
+
+if (! function_exists('file_override_name_but_preserve_extension')) {
+    function file_override_name_but_preserve_extension(string $original_name, string $new_name): string
+    {
+        $extension = file_get_extension($original_name);
+
+        return $new_name.($extension ? '.'.$extension : '');
+    }
+}

@@ -32,3 +32,11 @@ test('can get name with extension', function () {
     expect(file_get_extension('file'))
         ->toBe('');
 });
+
+test('override name but preserve the extension', function () {
+    $original_name = 'original_name.jpg';
+    $new_name = 'custom_name';
+
+    expect(file_override_name_but_preserve_extension($original_name, $new_name))
+        ->toBe('custom_name.jpg');
+});
