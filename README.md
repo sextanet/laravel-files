@@ -61,16 +61,18 @@ $url = $file->url();
 $temporary_url = $file->temporaryUrl();
 ```
 
-### Passing type
+### Passing a type
+
+Type doesn't represent a real type or mimetype, it's only an optional field
 
 ```php
 $uploaded_file = request()->your_file;
 
 // Store
-$user->addFile($uploaded_file, type: 'profile_photo');
+$user->addFile($uploaded_file, type: 'document');
 
 // Get
-$user->files()->type('image')->get();
+$user->files()->type('document')->get();
 ```
 
 ### Advanced usage
