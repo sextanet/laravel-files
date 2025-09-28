@@ -41,7 +41,7 @@ $uploaded_file = request()->your_file;
 $file = $user->addFile($uploaded_file); // using your default disk from config/filesystems.php
 ```
 
-Or passing the name, for example: `new_name`, will preserve the extension, so, it will generate `new_name.mp4`
+Or passing the name, for example: `new_name`, will preserve the extension, so, it will store as `new_name.mp4`
 
 ```php
 $uploaded_file = request()->your_file; // let's supose you have "a_video.mp4"
@@ -59,6 +59,18 @@ $path = $file->path();
 $url = $file->url();
 
 $temporary_url = $file->temporaryUrl();
+```
+
+### Passing type
+
+```php
+$uploaded_file = request()->your_file;
+
+// Store
+$user->addFile($uploaded_file, type: 'profile_photo');
+
+// Get
+$user->files()->type('image')->get();
 ```
 
 ### Advanced usage
@@ -86,20 +98,6 @@ $temporary_url = $file->getTemporaryUrl(); // Will return 120 minutes
 
 // Store on another disk, like s3
 LaravelFiles::setDisk('s3');
-```
-
-### Passing types
-
-Passing a type
-
-```php
-$uploaded_file = request()->your_file;
-
-// Store
-$user->addFile($uploaded_file, type: 'profile_photo');
-
-// Get
-$user->files()->type('image')->get();
 ```
 
 ### Custom keys
