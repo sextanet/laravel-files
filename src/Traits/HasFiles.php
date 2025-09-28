@@ -2,15 +2,14 @@
 
 namespace SextaNet\LaravelFiles\Traits;
 
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Http\UploadedFile;
 use SextaNet\LaravelFiles\Models\File;
 
 trait HasFiles
 {
-    public function files(): MorphMany
+    public function files()
     {
-        return $this->morphMany(config('files.model', File::class), 'fileable');
+        return $this->morphMany(File::class, 'fileable');
     }
 
     public function storeUploadedFile(UploadedFile $file, ?string $name = null)
