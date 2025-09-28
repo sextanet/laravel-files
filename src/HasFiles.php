@@ -1,6 +1,6 @@
 <?php
 
-namespace SextaNet\LaravelFiles\Traits;
+namespace SextaNet\LaravelFiles;
 
 use Illuminate\Http\UploadedFile;
 use SextaNet\LaravelFiles\Models\File;

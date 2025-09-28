@@ -26,9 +26,7 @@ class File extends Model
 
     public function path(): string
     {
-        return Storage::disk(
-            $this->attributes['disk'])->path($this->attributes['path']
-            );
+        return Storage::disk($this->attributes['disk'])->path($this->attributes['path']);
     }
 
     public function url(): string

@@ -23,15 +23,15 @@ php artisan migrate
 ## Usage
 
 ```php
-use SextaNet\LaravelFiles\Traits\HasFiles; // 👈 Import the Trait
+use SextaNet\LaravelFiles\HasFiles; // 👈 1. Import
 
 class YourModel extends Model
 {
-    use HasFiles; // 👈 Use it
+    use HasFiles; // 👈 2. Use it
 }
 ```
 
-You can reuse it in each model, any times!
+We're ready! You can reuse it in each model, any times!
 
 ### Store
 
