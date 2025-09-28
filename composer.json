@@ -36,7 +36,10 @@
         "psr-4": {
             "SextaNet\\LaravelFiles\\": "src/",
             "SextaNet\\LaravelFiles\\Database\\Factories\\": "database/factories/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

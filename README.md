@@ -66,6 +66,31 @@ $url = $file->url();
 $temporary_url = $file->temporaryUrl();
 ```
 
+### Download
+
+#### Without parameters
+
+```php
+return $file->download();
+```
+
+#### With custom parameters
+
+```php
+$name = 'custom_name';
+$headers = [];
+
+return $file->download($name, $headers);
+```
+
+#### Turn off the extensions
+
+By default it preserves the extension. You can disable that by passing `preserveExtension` to `false`
+
+```php
+return $file->download(preserveExtension: false);
+```
+
 ## Advanced usage
 
 ### Passing a type

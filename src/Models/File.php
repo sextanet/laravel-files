@@ -21,12 +21,14 @@ class File extends Model
 
     public function path(): string
     {
-        return Storage::disk($this->attributes['disk'])->path($this->attributes['path']);
+        return Storage::disk($this->attributes['disk'])
+            ->path($this->attributes['path']);
     }
 
     public function url(): string
     {
-        return Storage::disk($this->attributes['disk'])->url($this->attributes['path']);
+        return Storage::disk($this->attributes['disk'])
+            ->url($this->attributes['path']);
     }
 
     public function temporaryUrl(int $minutes = 0): string
@@ -37,6 +39,19 @@ class File extends Model
 
         return Storage::disk($this->attributes['disk'])
             ->temporaryUrl($this->attributes['path'], now()->addMinutes($minutes));
+    }
+
+    public function download(?string $name = null, array $headers = [], $preserveExtension = true)
+    {
+        if ($preserveExtension) {
+            $name = file_override_name_but_preserve_extension(
+                $this->attributes['path'],
+                $name,
+            );
+        }
+
+        return Storage::disk($this->attributes['disk'])
+            ->download($this->attributes['path'], $name, $headers);
     }
 
     public function scopeType(Builder $query, string $type)
