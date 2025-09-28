@@ -46,9 +46,14 @@ class File extends Model
         return pathinfo($name, PATHINFO_EXTENSION);
     }
 
+    public function generateNameWithoutExtension($name): string
+    {
+        return pathinfo($name, PATHINFO_FILENAME);
+    }
+
     public function generateNameWithExtension($name): string
     {
-        return $name.'.'.$this->generateExtension($name);
+        return $this->generateNameWithoutExtension($name).'.'.$this->generateExtension($name);
     }
 
     public function download(?string $name = null, array $headers = [], $preserveExtension = true)
