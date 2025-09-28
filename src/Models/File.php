@@ -28,8 +28,12 @@ class File extends Model
         return Storage::disk($this->disk)->url($this->path);
     }
 
-    public function getTemporaryUrl(?int $minutes = 5): string
+    public function getTemporaryUrl(int $minutes = 0): string
     {
+        if ($minutes === 0) {
+            $minutes = config('files.default_temporary_url_minutes');
+        }
+
         return Storage::disk($this->disk)
             ->temporaryUrl($this->path, now()->addMinutes($minutes));
     }

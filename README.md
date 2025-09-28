@@ -54,7 +54,9 @@ $path = $file->getPath();
 
 $url = $file->getUrl();
 
-$temporary_url = $file->getTemporaryUrl();
+$temporary_url = $file->getTemporaryUrl(5); // 5 minutes
+
+$temporary_url = $file->getTemporaryUrl(20); // 20 minutes
 ```
 
 ## Testing

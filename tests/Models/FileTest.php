@@ -35,3 +35,10 @@ it('can get the temporary url with default minutes', function () {
     expect($this->file->getTemporaryUrl())
         ->toBe(Storage::disk('local')->temporaryUrl($this->file->path, now()->addMinutes(5)));
 });
+
+it('can get the temporary url with default forced minutes', function () {
+    config(['files.default_temporary_url_minutes' => 10]);
+
+    expect($this->file->getTemporaryUrl())
+        ->toBe(Storage::disk('local')->temporaryUrl($this->file->path, now()->addMinutes(10)));
+});
