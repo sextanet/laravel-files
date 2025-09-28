@@ -1,23 +1,34 @@
 <?php
 
 test('can remove the extension', function () {
-    expect(remove_extension('file.jpg'))
+    expect(file_remove_extension('file.jpg'))
         ->toBe('file');
 
-    expect(remove_extension('file.name.jpg'))
+    expect(file_remove_extension('file.name.jpg'))
         ->toBe('file.name');
 
-    expect(remove_extension('file'))
+    expect(file_remove_extension('file'))
         ->toBe('file');
-})->only();
+});
 
 test('can get the extension', function () {
-    expect(get_extension('file.jpg'))
+    expect(file_get_extension('file.jpg'))
         ->toBe('jpg');
 
-    expect(get_extension('file.name.jpg'))
+    expect(file_get_extension('file.name.jpg'))
         ->toBe('jpg');
 
-    expect(get_extension('file'))
+    expect(file_get_extension('file'))
         ->toBe('');
-})->only();
+});
+
+test('can get name with extension', function () {
+    expect(file_name_with_extension('file.jpg'))
+        ->toBe('file.jpg');
+
+    expect(file_name_with_extension('file.name.jpg'))
+        ->toBe('file.name.jpg');
+
+    expect(file_get_extension('file'))
+        ->toBe('');
+});

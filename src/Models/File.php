@@ -41,16 +41,6 @@ class File extends Model
             ->temporaryUrl($this->attributes['path'], now()->addMinutes($minutes));
     }
 
-    public function generateExtension($name)
-    {
-        return pathinfo($name, PATHINFO_EXTENSION);
-    }
-
-    public function generateNameWithoutExtension($name): string
-    {
-        return pathinfo($name, PATHINFO_FILENAME);
-    }
-
     public function generateNameWithExtension($name): string
     {
         return $this->generateNameWithoutExtension($name).'.'.$this->generateExtension($name);

@@ -41,23 +41,6 @@ it('can get the temporary url with default forced minutes', function () {
         ->toBe(Storage::disk('local')->temporaryUrl($this->file->path, now()->addMinutes(10)));
 });
 
-describe('generate names', function () {
-    test('can generate name without extension', function () {
-        expect($this->file->generateNameWithoutExtension('photo.jpg'))
-            ->toBe('photo');
-    });
-
-    test('can generate extension', function () {
-        expect($this->file->generateExtension('photo.jpg'))
-            ->toBe('jpg');
-    });
-
-    test('can generate name with extension', function () {
-        expect($this->file->generateNameWithExtension('photo.jpg'))
-            ->toBe('photo.jpg');
-    });
-});
-
 describe('download preserving extension', function () {
     test('without a name', function () {
         $response = $this->file->download(preserveExtension: true);
