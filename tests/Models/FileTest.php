@@ -40,3 +40,21 @@ it('can get the temporary url with default forced minutes', function () {
     expect($this->file->temporaryUrl())
         ->toBe(Storage::disk('local')->temporaryUrl($this->file->path, now()->addMinutes(10)));
 });
+
+describe('download files', function () {
+    it('can download without a name', function () {
+        $response = $this->file->download();
+
+        $name = $this->file->path;
+
+        expect($response->headers->get('content-disposition'))
+            ->toContain("attachment; filename={$name}");
+    });
+
+    it('can download with a name', function () {
+        $response = $this->file->download('name');
+
+        expect($response->headers->get('content-disposition'))
+            ->toContain('attachment; filename=name');
+    });
+});
