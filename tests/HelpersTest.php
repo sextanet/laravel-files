@@ -40,3 +40,10 @@ test('override name but preserve the extension', function () {
     expect(file_override_name_but_preserve_extension($original_name, $new_name))
         ->toBe('custom_name.jpg');
 });
+
+test('override name but preserve the extension without new name', function () {
+    $original_name = 'original_name.jpg';
+
+    expect(file_override_name_but_preserve_extension($original_name, null))
+        ->toBe('original_name.jpg');
+});

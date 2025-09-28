@@ -44,8 +44,10 @@ class File extends Model
     public function download(?string $name = null, array $headers = [], $preserveExtension = true)
     {
         if ($preserveExtension) {
-            $extension = file_get_extension($this->attributes['path']);
-            $name = $name ? file_remove_extension($name).'.'.$extension : null;
+            $name = file_override_name_but_preserve_extension(
+                $this->attributes['path'],
+                $name,
+            );
         }
 
         return Storage::disk($this->attributes['disk'])
