@@ -3,6 +3,7 @@
 namespace SextaNet\LaravelFiles\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Support\Facades\Storage;
 
 class File extends Model
 {
@@ -15,5 +16,21 @@ class File extends Model
         parent::__construct($attributes);
 
         $this->table = config('files.table', 'files');
+    }
+
+    public function getPath(): string
+    {
+        return Storage::disk($this->disk)->path($this->path);
+    }
+
+    public function getUrl(): string
+    {
+        return Storage::disk($this->disk)->url($this->path);
+    }
+
+    public function getTemporaryUrl(): string
+    {
+        return Storage::disk($this->disk)
+            ->temporaryUrl($this->path, now()->addMinutes(5));
     }
 }

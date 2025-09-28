@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use SextaNet\LaravelFiles\Models\File;
 
 beforeEach(function () {
+    Storage::fake('local');
     Storage::fake('public');
 
     $this->model = fake_model();
