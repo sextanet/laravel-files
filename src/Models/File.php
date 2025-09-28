@@ -41,8 +41,15 @@ class File extends Model
             ->temporaryUrl($this->attributes['path'], now()->addMinutes($minutes));
     }
 
-    public function download(?string $name = null, array $headers = [])
+    public function download(?string $name = null, array $headers = [], $preserveExtension = true)
     {
+        if ($preserveExtension) {
+            $name = file_override_name_but_preserve_extension(
+                $this->attributes['path'],
+                $name,
+            );
+        }
+
         return Storage::disk($this->attributes['disk'])
             ->download($this->attributes['path'], $name, $headers);
     }
