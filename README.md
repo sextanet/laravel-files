@@ -116,15 +116,14 @@ LaravelFiles::setDisk('s3');
 
 ## Custom keys
 
-By default, it uses your CURRENT_DISK in your `.env` file. If you want to force to use different values, you can add these keys:
+By default, we use the same `CURRENT_DISK` that you have in your `.env` file. If you want to force to use different values, you can add these keys with different values:
 
-Another disk:
-
+### Another disk
 ```dotenv
 FILES_DISK=s3
 ```
 
-Custom minutes:
+### Custom minutes
 
 ```dotenv
 FILES_TEMPORARY_URL_MINUTES=5
