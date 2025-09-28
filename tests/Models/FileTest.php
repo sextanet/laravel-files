@@ -58,3 +58,22 @@ describe('download preserving extension', function () {
             ->toContain('attachment; filename=name.jpg');
     });
 });
+
+
+describe('download without preserving extension', function () {
+    test('without a name', function () {
+        $response = $this->file->download(preserveExtension: false);
+
+        $name = file_remove_extension($this->file->path);
+
+        expect($response->headers->get('content-disposition'))
+            ->toContain("attachment; filename={$name}");
+    });
+
+    test('with a name', function () {
+        $response = $this->file->download('name', preserveExtension: false);
+
+        expect($response->headers->get('content-disposition'))
+            ->toContain('attachment; filename=name');
+    });
+});
