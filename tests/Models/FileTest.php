@@ -59,7 +59,6 @@ describe('download preserving extension', function () {
     });
 });
 
-
 describe('download without preserving extension', function () {
     test('without a name', function () {
         $response = $this->file->download(preserveExtension: false);
