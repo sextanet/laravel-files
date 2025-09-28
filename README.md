@@ -32,17 +32,17 @@ class YourModel extends Model
 ### Store
 
 ```php
-$file = request()->your_file;
+$uploaded_file = request()->your_file;
 
-$user->addFile($file); // using your default disk from config/filesystems.php
+$file = $user->addFile($uploaded_file); // using your default disk from config/filesystems.php
 ```
 
 Or passing a specific disk, for example: `public`
 
 ```php
-$file = request()->your_file;
+$uploaded_file = request()->your_file;
 
-$user->addFile($file, 'public');
+$file = $user->addFile($uploaded_file, 'public');
 ```
 
 ### Get
