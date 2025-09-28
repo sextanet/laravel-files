@@ -31,7 +31,7 @@ class File extends Model
     public function getTemporaryUrl(int $minutes = 0): string
     {
         if ($minutes === 0) {
-            $minutes = config('files.default_temporary_url_minutes');
+            $minutes = config('files.temporary_url_minutes');
         }
 
         return Storage::disk($this->disk)

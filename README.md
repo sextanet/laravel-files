@@ -25,7 +25,7 @@ php artisan migrate
 ```php
 class YourModel extends Model
 {
-    use HasFiles;
+    use HasFiles; // Use in each model as you need
 }
 ```
 
@@ -34,10 +34,10 @@ class YourModel extends Model
 ```php
 $file = request()->your_file;
 
-$user->addFile($file);
+$user->addFile($file); // using your default disk from config/filesystems.php
 ```
 
-Or passing a specific disk `public`
+Or passing a specific disk, for example: `public`
 
 ```php
 $file = request()->your_file;
@@ -54,9 +54,30 @@ $path = $file->getPath();
 
 $url = $file->getUrl();
 
-$temporary_url = $file->getTemporaryUrl(5); // 5 minutes
+$temporary_url = $file->getTemporaryUrl();
+```
 
+### Advanced usage
+
+Passing custom minutes in each implementation
+
+```php
 $temporary_url = $file->getTemporaryUrl(20); // 20 minutes
+```
+
+Passing custom minutes globally
+
+```php
+config(['files.default_temporary_url_minutes' => 60]);
+
+$temporary_url = $file->getTemporaryUrl(); // 60 minutes
+```
+
+### .env
+```dotenv
+FILES_TABLE=files
+FILES_DISK=local
+FILES_TEMPORARY_URL_MINUTES=5
 ```
 
 ## Testing

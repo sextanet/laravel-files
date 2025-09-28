@@ -5,5 +5,5 @@ return [
 
     'disk' => env('FILES_DISK', env('FILESYSTEM_DISK', 'local')),
 
-    'default_temporary_url_minutes' => env('FILES_DEFAULT_TEMPORARY_URL_MINUTES', 5),
+    'temporary_url_minutes' => env('FILES_TEMPORARY_URL_MINUTES', 5),
 ];
