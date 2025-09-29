@@ -71,6 +71,12 @@ $url = $file->url();
 $temporary_url = $file->temporaryUrl();
 ```
 
+### Get owner
+
+```php
+return $file->owner;
+```
+
 ### Get all files
 
 ```php
