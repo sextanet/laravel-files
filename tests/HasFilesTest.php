@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use SextaNet\LaravelFiles\Models\File;
@@ -13,39 +11,54 @@ beforeEach(function () {
     $this->model = fake_model();
 });
 
-it('has many files', function () {
-    $this->assertInstanceOf(
-        MorphMany::class,
-        $this->model->files()
-    );
-});
-
-it('has one file', function () {
-    $this->assertInstanceOf(
-        MorphOne::class,
-        $this->model->latestFile()
-    );
-});
-
 test('add a file', function () {
     $file = $this->model->addFile(
-        UploadedFile::fake()->image('photo.jpg'),
-        'public'
+        UploadedFile::fake()->image('photo.jpg')
     );
 
     expect($file)
         ->toBeInstanceOf(File::class);
 });
 
-test('add a file with type field', function () {
-    $this->model->addFile(
+test('add a file with a custom name', function () {
+    $file = $this->model->addFile(
         UploadedFile::fake()->image('photo.jpg'),
-        type: 'image',
+        'custom_name.jpg'
     );
 
-    expect($this->model->files()->type('image')->count())
+    expect($file->name)
+        ->toBe('custom_name.jpg');
+});
+
+test('add a file with a type', function () {
+    $this->model->addFile(
+        UploadedFile::fake()->image('photo.jpg'),
+        type: 'custom-type',
+    );
+
+    expect($this->model->files()->type('custom-type')->count())
         ->toBe(1);
 
     expect($this->model->files()->type('another')->count())
         ->toBe(0);
+});
+
+it('has many files', function () {
+    $this->model->addFile(
+        UploadedFile::fake()->image('photo.jpg')
+    );
+
+    expect($this->model->files()->first())
+        ->toBeInstanceOf(File::class);
+});
+
+it('has latest file', function () {
+    $this->model->addFile(
+        UploadedFile::fake()->image('photo.jpg')
+    );
+
+    $this->assertInstanceOf(
+        File::class,
+        $this->model->latestFile
+    );
 });
