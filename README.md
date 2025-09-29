@@ -26,7 +26,7 @@ composer require sextanet/laravel-files
 Publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-files-migrations"
+php artisan vendor:publish --tag="files-migrations"
 php artisan migrate
 ```
 
