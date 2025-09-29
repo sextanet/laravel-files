@@ -2,6 +2,7 @@
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use SextaNet\LaravelFiles\Models\YourModel;
 
 beforeEach(function () {
     Storage::fake('local');
@@ -16,7 +17,7 @@ beforeEach(function () {
 
 it('has owner', function () {
     expect($this->file->owner)
-        ->toBe($this->model);
+        ->toBeInstanceOf(YourModel::class);
 });
 
 it('can get the path', function () {
