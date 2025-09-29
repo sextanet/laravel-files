@@ -7,9 +7,7 @@ uses(TestCase::class)->in(__DIR__);
 
 function fake_model()
 {
-    $model = new YourModel;
-
-    $model->id = 1;
+    $model = YourModel::factory()->create();
 
     return $model;
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use SextaNet\LaravelFiles\Models\YourModel;
 
 beforeEach(function () {
     Storage::fake('local');
@@ -12,6 +13,11 @@ beforeEach(function () {
     $this->file = $this->model->addFile(
         UploadedFile::fake()->image('photo.jpg')
     );
+});
+
+it('has owner', function () {
+    expect($this->file->owner)
+        ->toBeInstanceOf(YourModel::class);
 });
 
 it('can get the path', function () {

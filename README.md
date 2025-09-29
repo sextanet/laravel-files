@@ -71,6 +71,24 @@ $url = $file->url();
 $temporary_url = $file->temporaryUrl();
 ```
 
+### Get owner
+
+```php
+return $file->owner;
+```
+
+### Get all files
+
+```php
+return $user->files;
+```
+
+### Get the latest file
+
+```php
+return $user->latestFile;
+```
+
 ### Download
 
 #### Without parameters

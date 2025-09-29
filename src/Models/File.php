@@ -4,6 +4,7 @@ namespace SextaNet\LaravelFiles\Models;
 
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\Storage;
 
 class File extends Model
@@ -17,6 +18,11 @@ class File extends Model
         parent::__construct($attributes);
 
         $this->table = config('files.table', 'files');
+    }
+
+    public function owner(): MorphTo
+    {
+        return $this->morphTo('fileable');
     }
 
     public function path(): string
