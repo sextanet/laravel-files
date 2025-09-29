@@ -14,7 +14,7 @@ trait HasFiles
         return $this->morphMany(File::class, 'fileable');
     }
 
-    public function latest_file(): MorphOne
+    public function latestFile(): MorphOne
     {
         return $this->morphOne(File::class, 'fileable')
             ->latestOfMany();

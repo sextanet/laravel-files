@@ -23,7 +23,7 @@ it('has many files', function () {
 it('has one file', function () {
     $this->assertInstanceOf(
         MorphOne::class,
-        $this->model->latest_file()
+        $this->model->latestFile()
     );
 });
 
