@@ -80,7 +80,7 @@ return $user->files;
 ### Get the latest file
 
 ```php
-return $user->latest_file;
+return $user->latestFile;
 ```
 
 ### Download
