@@ -14,6 +14,11 @@ beforeEach(function () {
     );
 });
 
+it('has owner', function () {
+    expect($this->file->owner)
+        ->toBe($this->model);
+});
+
 it('can get the path', function () {
     expect($this->file->path())
         ->toBe(Storage::disk('local')->path($this->file->path));
