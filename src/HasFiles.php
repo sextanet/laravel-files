@@ -2,12 +2,13 @@
 
 namespace SextaNet\LaravelFiles;
 
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Http\UploadedFile;
 use SextaNet\LaravelFiles\Models\File;
 
 trait HasFiles
 {
-    public function files()
+    public function files(): MorphMany
     {
         return $this->morphMany(File::class, 'fileable');
     }
