@@ -3,6 +3,7 @@
 namespace SextaNet\LaravelFiles;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Http\UploadedFile;
 use SextaNet\LaravelFiles\Models\File;
 
@@ -11,6 +12,12 @@ trait HasFiles
     public function files(): MorphMany
     {
         return $this->morphMany(File::class, 'fileable');
+    }
+
+    public function latest_file(): MorphOne
+    {
+        return $this->morphOne(File::class, 'fileable')
+            ->latestOfMany();
     }
 
     public function generateName(UploadedFile $file, ?string $name = null): string
@@ -36,7 +43,7 @@ trait HasFiles
         ]);
     }
 
-    public function addFile(UploadedFile $file, ?string $name = null, ?string $type = null): File
+    public function addFile(UploadedFile $file, ?string $name = null, ?string $type = null)
     {
         $name = $name ?? $file->getClientOriginalName();
 

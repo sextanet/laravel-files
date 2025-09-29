@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use SextaNet\LaravelFiles\Models\File;
@@ -16,6 +17,13 @@ it('has many files', function () {
     $this->assertInstanceOf(
         MorphMany::class,
         $this->model->files()
+    );
+});
+
+it('has one file', function () {
+    $this->assertInstanceOf(
+        MorphOne::class,
+        $this->model->latest_file()
     );
 });
 

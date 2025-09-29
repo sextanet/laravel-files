@@ -71,6 +71,18 @@ $url = $file->url();
 $temporary_url = $file->temporaryUrl();
 ```
 
+### Get all files
+
+```php
+return $user->files;
+```
+
+### Get the latest file
+
+```php
+return $user->latest_file;
+```
+
 ### Download
 
 #### Without parameters
