@@ -7,6 +7,6 @@ use SextaNet\LaravelFiles\HasFiles;
 
 class YourModel extends Model
 {
-    use HasFiles;
     use HasFactory;
+    use HasFiles;
 }
