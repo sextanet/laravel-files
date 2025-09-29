@@ -12,6 +12,11 @@ It supports:
 - [Local Temporary URLs ](https://laravel.com/docs/12.x/filesystem#enabling-local-temporary-urls)
 - [Scoped disks](https://laravel.com/docs/12.x/filesystem#scoped-and-read-only-filesystems)
 
+## Requirements
+
+- Laravel 11+
+- PHP 8.3+
+
 ## Installation
 
 ```bash

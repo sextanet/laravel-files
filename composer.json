@@ -4,7 +4,9 @@
     "keywords": [
         "SextaNet",
         "laravel",
-        "laravel-files"
+        "files",
+        "laravel-files",
+        "eloquent"
     ],
     "homepage": "https://github.com/sextanet/laravel-files",
     "license": "MIT",
