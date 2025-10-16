@@ -20,13 +20,24 @@ test('add a file', function () {
         ->toBeInstanceOf(File::class);
 });
 
+test('add a file with a custom destination', function () {
+    $file = $this->model->addFile(
+        UploadedFile::fake()->image('photo.jpg'),
+        destination: 'documents',
+        name: 'custom_name'
+    );
+
+    expect($file->path)
+        ->toBe('documents/custom_name.jpg');
+});
+
 test('add a file with a custom name', function () {
     $file = $this->model->addFile(
         UploadedFile::fake()->image('photo.jpg'),
-        'custom_name.jpg'
+        name: 'custom_name'
     );
 
-    expect($file->name)
+    expect($file->path)
         ->toBe('custom_name.jpg');
 });
 

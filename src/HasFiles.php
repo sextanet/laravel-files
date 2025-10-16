@@ -20,7 +20,7 @@ trait HasFiles
             ->latestOfMany();
     }
 
-    public function generateName(UploadedFile $file, ?string $name = null): string
+    public function generateName(UploadedFile $file, ?string $name = ''): string
     {
         $name = $name ?? $file->getClientOriginalName();
         $extension = $file->getClientOriginalExtension();
@@ -28,30 +28,32 @@ trait HasFiles
         return $name.'.'.$extension;
     }
 
-    public function generatePath(): string
+    public function generateDestination($destination = ''): string
     {
-        return '';
+        return $destination;
     }
 
-    public function storeUploadedFile(UploadedFile $file, ?string $name = null)
+    public function storeUploadedFile(UploadedFile $file, string $destination = '', string $name = '')
     {
         $name_with_extension = $this->generateName($file, $name);
 
-        return $file->store($this->generatePath(), [
-            'disk' => config('files.disk'),
-            'name' => $name_with_extension,
-        ]);
+        return $file->storeAs(
+            path: $this->generateDestination($destination),
+            name: $name_with_extension,
+            options: [
+                'disk' => config('files.disk'),
+            ]
+        );
     }
 
-    public function addFile(UploadedFile $file, ?string $name = null, ?string $type = null)
+    public function addFile(UploadedFile $file, string $destination = '', string $name = '', string $type = '')
     {
         $name = $name ?? $file->getClientOriginalName();
 
-        $uploaded_file = $this->storeUploadedFile($file, $name);
+        $uploaded_file = $this->storeUploadedFile($file, $destination, $name);
 
         return $this->files()->create([
             'disk' => config('files.disk'),
-            'name' => $name,
             'path' => $uploaded_file,
             'type' => $type,
         ]);
