@@ -18,4 +18,19 @@ class LaravelFiles
     {
         config(['files.table' => $table]);
     }
+
+    public function getDisk(): string
+    {
+        return config('files.disk');
+    }
+
+    public function preserveOriginalNames($enabled = true): void
+    {
+        config(['files.preserve_original_names' => $enabled]);
+    }
+
+    public function getPreserveOriginalNames(): bool
+    {
+        return config('files.preserve_original_names');
+    }
 }

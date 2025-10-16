@@ -13,7 +13,7 @@ return new class extends Migration
         Schema::create($table, function (Blueprint $table) {
             $table->ulid('id');
             $table->text('disk');
-            $table->string('name');
+            // $table->string('name');
             $table->text('path');
             $table->ulidMorphs('fileable');
             $table->string('type')->nullable();

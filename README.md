@@ -46,17 +46,16 @@ We're ready! You can reuse it in each model, any times!
 ### Add (and Store)
 
 ```php
-$uploaded_file = request()->your_file;
+$uploaded_file = request()->your_file; // let's supose you have "a_video.mp4"
 
 $file = $user->addFile($uploaded_file); // using your default disk from config/filesystems.php
 ```
 
-Or passing the name, for example: `new_name`, will preserve the extension, so, it will store as `new_name.mp4`
+Passing a destination and name
 
 ```php
-$uploaded_file = request()->your_file; // let's supose you have "a_video.mp4"
 
-$file = $user->addFile($uploaded_file, 'new_name'); // will generate new_name.mp4
+$file = $user->addFile($uploaded_file, 'destination', 'my_file'); // will store on destination/my_file.mp4
 ```
 
 ### Get
@@ -112,6 +111,17 @@ By default it preserves the extension. You can disable that by passing `preserve
 
 ```php
 return $file->download(preserveExtension: false);
+```
+
+#### Preserve original names
+
+By default, it doesn't preserves original empty custom names.
+
+> [!CAUTION]
+> If you enable that, you could overwrite your existent files.
+
+```php
+LaravelFiles::preserveOriginalNames(true);
 ```
 
 ## Advanced usage

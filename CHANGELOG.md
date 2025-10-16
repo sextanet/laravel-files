@@ -2,6 +2,16 @@
 
 All notable changes to `laravel-files` will be documented in this file.
 
+## 1.1.1 - 2025-09-29
+
+### What's Changed
+
+* Run tests by @sebacarrasco93 in https://github.com/sextanet/laravel-files/pull/4
+* fix: publish migrations by @sebacarrasco93 in https://github.com/sextanet/laravel-files/pull/5
+* merge dev into main by @sebacarrasco93 in https://github.com/sextanet/laravel-files/pull/6
+
+**Full Changelog**: https://github.com/sextanet/laravel-files/compare/1.1.0...1.1.1
+
 ## 1.1.0 - 2025-09-28
 
 ### What's Changed
