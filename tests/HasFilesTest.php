@@ -40,35 +40,37 @@ it('has latest file', function () {
     );
 });
 
-test('add a file with a parameterized destination', function () {
-    $file = $this->model->addFile(
-        UploadedFile::fake()->image('photo.jpg'),
-        destination: 'documents/user',
-    );
+describe('add file with parameters', function () {
+    test('add a file with a parameterized destination', function () {
+        $file = $this->model->addFile(
+            UploadedFile::fake()->image('photo.jpg'),
+            destination: 'documents/user',
+        );
 
-    expect($file->path)
-        ->toBe('documents/user/photo.jpg');
-})->skip('wip');
+        expect($file->path)
+            ->toBe('documents/user/photo.jpg');
+    })->only();
 
-test('add a file with a parameterized custom name', function () {
-    $file = $this->model->addFile(
-        UploadedFile::fake()->image('photo.jpg'),
-        name: 'custom_name'
-    );
+    test('add a file with a parameterized custom name', function () {
+        $file = $this->model->addFile(
+            UploadedFile::fake()->image('photo.jpg'),
+            name: 'custom_name'
+        );
 
-    expect($file->path)
-        ->toBe('custom_name.jpg');
-});
+        expect($file->path)
+            ->toBe('custom_name.jpg');
+    });
 
-test('add a file with a parameterized type', function () {
-    $this->model->addFile(
-        UploadedFile::fake()->image('photo.jpg'),
-        type: 'custom-type',
-    );
+    test('add a file with a parameterized type', function () {
+        $this->model->addFile(
+            UploadedFile::fake()->image('photo.jpg'),
+            type: 'custom-type',
+        );
 
-    expect($this->model->files()->type('custom-type')->count())
-        ->toBe(1);
+        expect($this->model->files()->type('custom-type')->count())
+            ->toBe(1);
 
-    expect($this->model->files()->type('another')->count())
-        ->toBe(0);
+        expect($this->model->files()->type('another')->count())
+            ->toBe(0);
+    });
 });
