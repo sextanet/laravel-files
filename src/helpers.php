@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Http\UploadedFile;
+use SextaNet\LaravelFiles\Facades\LaravelFiles;
+
 if (! function_exists('file_remove_extension')) {
     function file_remove_extension(string $filename): string
     {
@@ -38,5 +41,19 @@ if (! function_exists('generate_destination_path')) {
     function generate_destination_path($destination = null): string
     {
         return $destination ?? '';
+    }
+}
+
+if (! function_exists('generate_name')) {
+    function generate_name(UploadedFile $file, ?string $name = null): string
+    {
+        if (is_null($name) && ! LaravelFiles::getPreserveOriginalNames()) {
+            $name = uniqid().str()->random(4);
+        }
+
+        $name = $name ?? file_remove_extension($file->getClientOriginalName());
+        $extension = $file->getClientOriginalExtension();
+
+        return format_name_with_extension($name.'.'.$extension);
     }
 }

@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use SextaNet\LaravelFiles\Facades\LaravelFiles;
+
 test('can remove the extension', function () {
     expect(file_remove_extension('file.jpg'))
         ->toBe('file');
@@ -54,4 +58,47 @@ it('generate destination path', function () {
 
     expect(generate_destination_path())
         ->toBe('');
+});
+
+describe('generate name', function () {
+    beforeEach(function () {
+        Storage::fake('local');
+        Storage::fake('public');
+
+        $this->model = fake_model();
+
+        $this->file = UploadedFile::fake()->image('photo.jpg');
+    });
+
+    test('with custom name', function () {
+        $name = generate_name(
+            $this->file,
+            name: 'custom_name'
+        );
+
+        expect($name)
+            ->toBe('custom_name.jpg');
+    });
+
+    test('without custom name', function () {
+        LaravelFiles::preserveOriginalNames(true);
+
+        $name = generate_name(
+            $this->file
+        );
+
+        expect($name)
+            ->toBe('photo.jpg');
+    });
+
+    test('with a random name', function () {
+        LaravelFiles::preserveOriginalNames(false);
+
+        $name = generate_name(
+            $this->file
+        );
+
+        expect($name)
+            ->not->toBe('photo.jpg');
+    });
 });

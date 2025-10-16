@@ -2,6 +2,7 @@
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use SextaNet\LaravelFiles\Facades\LaravelFiles;
 use SextaNet\LaravelFiles\Models\File;
 
 beforeEach(function () {
@@ -42,6 +43,8 @@ it('has latest file', function () {
 
 describe('add file with parameters', function () {
     test('with destination', function () {
+        LaravelFiles::preserveOriginalNames(true);
+
         $file = $this->model->addFile(
             UploadedFile::fake()->image('photo.jpg'),
             destination: 'documents/user',

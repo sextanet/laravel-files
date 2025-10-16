@@ -21,14 +21,6 @@ trait HasFiles
             ->latestOfMany();
     }
 
-    public function generateName(UploadedFile $file, ?string $name = null): string
-    {
-        $name = $name ?? file_remove_extension($file->getClientOriginalName());
-        $extension = $file->getClientOriginalExtension();
-
-        return format_name_with_extension($name.'.'.$extension);
-    }
-
     public function storeUploadedFile(UploadedFile $file, ?string $destination, string $name)
     {
         return $file->storeAs(
@@ -42,7 +34,7 @@ trait HasFiles
 
     public function addFile(UploadedFile $file, ?string $destination = null, ?string $name = null, ?string $type = null)
     {
-        $name = $this->generateName($file, $name);
+        $name = generate_name($file, $name);
 
         $uploaded_file = $this->storeUploadedFile($file, $destination, $name);
 
