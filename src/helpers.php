@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Http\UploadedFile;
+use SextaNet\LaravelFiles\Facades\LaravelFiles;
+
 if (! function_exists('file_remove_extension')) {
     function file_remove_extension(string $filename): string
     {
@@ -14,8 +17,8 @@ if (! function_exists('file_get_extension')) {
     }
 }
 
-if (! function_exists('file_name_with_extension')) {
-    function file_name_with_extension(string $filename): string
+if (! function_exists('format_name_with_extension')) {
+    function format_name_with_extension(string $filename): string
     {
         return file_remove_extension($filename).'.'.file_get_extension($filename);
     }
@@ -25,11 +28,32 @@ if (! function_exists('file_override_name_but_preserve_extension')) {
     function file_override_name_but_preserve_extension(string $original_name, ?string $new_name): string
     {
         if (! $new_name) {
-            return file_name_with_extension($original_name);
+            return format_name_with_extension($original_name);
         }
 
         $extension = file_get_extension($original_name);
 
         return $new_name.($extension ? '.'.$extension : '');
+    }
+}
+
+if (! function_exists('generate_destination_path')) {
+    function generate_destination_path($destination = null): string
+    {
+        return $destination ?? '';
+    }
+}
+
+if (! function_exists('generate_name')) {
+    function generate_name(UploadedFile $file, ?string $name = null): string
+    {
+        if (is_null($name) && ! LaravelFiles::getPreserveOriginalNames()) {
+            $name = uniqid().str()->random(4);
+        }
+
+        $name = $name ?? file_remove_extension($file->getClientOriginalName());
+        $extension = $file->getClientOriginalExtension();
+
+        return format_name_with_extension($name.'.'.$extension);
     }
 }

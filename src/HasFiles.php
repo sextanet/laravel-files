@@ -5,6 +5,7 @@ namespace SextaNet\LaravelFiles;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Http\UploadedFile;
+use SextaNet\LaravelFiles\Facades\LaravelFiles;
 use SextaNet\LaravelFiles\Models\File;
 
 trait HasFiles
@@ -20,38 +21,25 @@ trait HasFiles
             ->latestOfMany();
     }
 
-    public function generateName(UploadedFile $file, ?string $name = null): string
+    public function storeUploadedFile(UploadedFile $file, ?string $destination, string $name)
     {
-        $name = $name ?? $file->getClientOriginalName();
-        $extension = $file->getClientOriginalExtension();
-
-        return $name.'.'.$extension;
+        return $file->storeAs(
+            path: generate_destination_path($destination),
+            name: $name,
+            options: [
+                'disk' => LaravelFiles::getDisk(),
+            ]
+        );
     }
 
-    public function generatePath(): string
+    public function addFile(UploadedFile $file, ?string $destination = null, ?string $name = null, ?string $type = null)
     {
-        return '';
-    }
+        $name = generate_name($file, $name);
 
-    public function storeUploadedFile(UploadedFile $file, ?string $name = null)
-    {
-        $name_with_extension = $this->generateName($file, $name);
-
-        return $file->store($this->generatePath(), [
-            'disk' => config('files.disk'),
-            'name' => $name_with_extension,
-        ]);
-    }
-
-    public function addFile(UploadedFile $file, ?string $name = null, ?string $type = null)
-    {
-        $name = $name ?? $file->getClientOriginalName();
-
-        $uploaded_file = $this->storeUploadedFile($file, $name);
+        $uploaded_file = $this->storeUploadedFile($file, $destination, $name);
 
         return $this->files()->create([
-            'disk' => config('files.disk'),
-            'name' => $name,
+            'disk' => LaravelFiles::getDisk(),
             'path' => $uploaded_file,
             'type' => $type,
         ]);

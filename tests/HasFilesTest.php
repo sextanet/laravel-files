@@ -2,6 +2,7 @@
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use SextaNet\LaravelFiles\Facades\LaravelFiles;
 use SextaNet\LaravelFiles\Models\File;
 
 beforeEach(function () {
@@ -18,29 +19,6 @@ test('add a file', function () {
 
     expect($file)
         ->toBeInstanceOf(File::class);
-});
-
-test('add a file with a custom name', function () {
-    $file = $this->model->addFile(
-        UploadedFile::fake()->image('photo.jpg'),
-        'custom_name.jpg'
-    );
-
-    expect($file->name)
-        ->toBe('custom_name.jpg');
-});
-
-test('add a file with a type', function () {
-    $this->model->addFile(
-        UploadedFile::fake()->image('photo.jpg'),
-        type: 'custom-type',
-    );
-
-    expect($this->model->files()->type('custom-type')->count())
-        ->toBe(1);
-
-    expect($this->model->files()->type('another')->count())
-        ->toBe(0);
 });
 
 it('has many files', function () {
@@ -61,4 +39,41 @@ it('has latest file', function () {
         File::class,
         $this->model->latestFile
     );
+});
+
+describe('add file with parameters', function () {
+    test('with destination', function () {
+        LaravelFiles::preserveOriginalNames(true);
+
+        $file = $this->model->addFile(
+            UploadedFile::fake()->image('photo.jpg'),
+            destination: 'documents/user',
+        );
+
+        expect($file->path)
+            ->toBe('documents/user/photo.jpg');
+    });
+
+    test('with name', function () {
+        $file = $this->model->addFile(
+            UploadedFile::fake()->image('photo.jpg'),
+            name: 'custom_name'
+        );
+
+        expect($file->path)
+            ->toBe('custom_name.jpg');
+    });
+
+    test('with type', function () {
+        $this->model->addFile(
+            UploadedFile::fake()->image('photo.jpg'),
+            type: 'custom-type',
+        );
+
+        expect($this->model->files()->type('custom-type')->count())
+            ->toBe(1);
+
+        expect($this->model->files()->type('another')->count())
+            ->toBe(0);
+    });
 });
