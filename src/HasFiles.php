@@ -5,6 +5,7 @@ namespace SextaNet\LaravelFiles;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Http\UploadedFile;
+use SextaNet\LaravelFiles\Facades\LaravelFiles;
 use SextaNet\LaravelFiles\Models\File;
 
 trait HasFiles
@@ -20,7 +21,7 @@ trait HasFiles
             ->latestOfMany();
     }
 
-    public function generateName(UploadedFile $file, ?string $name = ''): string
+    public function generateName(UploadedFile $file, ?string $name = null): string
     {
         $name = $name ?? $file->getClientOriginalName();
         $extension = $file->getClientOriginalExtension();
@@ -28,12 +29,12 @@ trait HasFiles
         return $name.'.'.$extension;
     }
 
-    public function generateDestination($destination = ''): string
+    public function generateDestination($destination = null): string
     {
-        return $destination;
+        return $destination ?? '';
     }
 
-    public function storeUploadedFile(UploadedFile $file, string $destination = '', string $name = '')
+    public function storeUploadedFile(UploadedFile $file, ?string $destination = null, ?string $name = null)
     {
         $name_with_extension = $this->generateName($file, $name);
 
@@ -41,19 +42,19 @@ trait HasFiles
             path: $this->generateDestination($destination),
             name: $name_with_extension,
             options: [
-                'disk' => config('files.disk'),
+                'disk' => LaravelFiles::getDisk(),
             ]
         );
     }
 
-    public function addFile(UploadedFile $file, string $destination = '', string $name = '', string $type = '')
+    public function addFile(UploadedFile $file, ?string $destination = null, ?string $name = null, ?string $type = null)
     {
         $name = $name ?? $file->getClientOriginalName();
 
         $uploaded_file = $this->storeUploadedFile($file, $destination, $name);
 
         return $this->files()->create([
-            'disk' => config('files.disk'),
+            'disk' => LaravelFiles::getDisk(),
             'path' => $uploaded_file,
             'type' => $type,
         ]);

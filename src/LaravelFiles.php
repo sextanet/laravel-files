@@ -18,4 +18,9 @@ class LaravelFiles
     {
         config(['files.table' => $table]);
     }
+
+    public function getDisk(): string
+    {
+        return config('files.disk');
+    }
 }
