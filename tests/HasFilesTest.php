@@ -49,7 +49,7 @@ describe('add file with parameters', function () {
 
         expect($file->path)
             ->toBe('documents/user/photo.jpg');
-    })->skip();
+    });
 
     test('with name', function () {
         $file = $this->model->addFile(

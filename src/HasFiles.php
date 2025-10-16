@@ -29,13 +29,11 @@ trait HasFiles
         return format_name_with_extension($name.'.'.$extension);
     }
 
-    public function storeUploadedFile(UploadedFile $file, ?string $destination = null, ?string $name = null)
+    public function storeUploadedFile(UploadedFile $file, ?string $destination = null, string $name)
     {
-        $name_with_extension = $this->generateName($file, $name);
-
         return $file->storeAs(
             path: generate_destination_path($destination),
-            name: $name_with_extension,
+            name: $name,
             options: [
                 'disk' => LaravelFiles::getDisk(),
             ]
@@ -44,8 +42,8 @@ trait HasFiles
 
     public function addFile(UploadedFile $file, ?string $destination = null, ?string $name = null, ?string $type = null)
     {
-        $name = $name ?? $file->getClientOriginalName();
-
+        $name = $this->generateName($file, $name);
+        
         $uploaded_file = $this->storeUploadedFile($file, $destination, $name);
 
         return $this->files()->create([
