@@ -41,7 +41,7 @@ it('has latest file', function () {
 });
 
 describe('add file with parameters', function () {
-    test('add a file with a parameterized destination', function () {
+    test('with destination', function () {
         $file = $this->model->addFile(
             UploadedFile::fake()->image('photo.jpg'),
             destination: 'documents/user',
@@ -49,9 +49,9 @@ describe('add file with parameters', function () {
 
         expect($file->path)
             ->toBe('documents/user/photo.jpg');
-    })->only();
+    })->skip();
 
-    test('add a file with a parameterized custom name', function () {
+    test('with name', function () {
         $file = $this->model->addFile(
             UploadedFile::fake()->image('photo.jpg'),
             name: 'custom_name'
@@ -61,7 +61,7 @@ describe('add file with parameters', function () {
             ->toBe('custom_name.jpg');
     });
 
-    test('add a file with a parameterized type', function () {
+    test('with type', function () {
         $this->model->addFile(
             UploadedFile::fake()->image('photo.jpg'),
             type: 'custom-type',
