@@ -23,10 +23,10 @@ test('can get the extension', function () {
 });
 
 test('can get name with extension', function () {
-    expect(file_name_with_extension('file.jpg'))
+    expect(format_name_with_extension('file.jpg'))
         ->toBe('file.jpg');
 
-    expect(file_name_with_extension('file.name.jpg'))
+    expect(format_name_with_extension('file.name.jpg'))
         ->toBe('file.name.jpg');
 
     expect(file_get_extension('file'))

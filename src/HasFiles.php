@@ -26,7 +26,7 @@ trait HasFiles
         $name = $name ?? $file->getClientOriginalName();
         $extension = $file->getClientOriginalExtension();
 
-        return $name.'.'.$extension;
+        return format_name_with_extension($name.'.'.$extension);
     }
 
     public function storeUploadedFile(UploadedFile $file, ?string $destination = null, ?string $name = null)
