@@ -20,39 +20,6 @@ test('add a file', function () {
         ->toBeInstanceOf(File::class);
 });
 
-test('add a file with a custom destination', function () {
-    $file = $this->model->addFile(
-        UploadedFile::fake()->image('photo.jpg'),
-        destination: 'documents',
-    );
-
-    expect($file->path)
-        ->toBe('documents/photo.jpg');
-})->skip();
-
-test('add a file with a custom name', function () {
-    $file = $this->model->addFile(
-        UploadedFile::fake()->image('photo.jpg'),
-        name: 'custom_name'
-    );
-
-    expect($file->path)
-        ->toBe('custom_name.jpg');
-});
-
-test('add a file with a type', function () {
-    $this->model->addFile(
-        UploadedFile::fake()->image('photo.jpg'),
-        type: 'custom-type',
-    );
-
-    expect($this->model->files()->type('custom-type')->count())
-        ->toBe(1);
-
-    expect($this->model->files()->type('another')->count())
-        ->toBe(0);
-});
-
 it('has many files', function () {
     $this->model->addFile(
         UploadedFile::fake()->image('photo.jpg')
@@ -71,4 +38,37 @@ it('has latest file', function () {
         File::class,
         $this->model->latestFile
     );
+});
+
+test('add a file with a parameterized destination', function () {
+    $file = $this->model->addFile(
+        UploadedFile::fake()->image('photo.jpg'),
+        destination: 'documents/user',
+    );
+
+    expect($file->path)
+        ->toBe('documents/user/photo.jpg');
+})->skip('wip');
+
+test('add a file with a parameterized custom name', function () {
+    $file = $this->model->addFile(
+        UploadedFile::fake()->image('photo.jpg'),
+        name: 'custom_name'
+    );
+
+    expect($file->path)
+        ->toBe('custom_name.jpg');
+});
+
+test('add a file with a parameterized type', function () {
+    $this->model->addFile(
+        UploadedFile::fake()->image('photo.jpg'),
+        type: 'custom-type',
+    );
+
+    expect($this->model->files()->type('custom-type')->count())
+        ->toBe(1);
+
+    expect($this->model->files()->type('another')->count())
+        ->toBe(0);
 });

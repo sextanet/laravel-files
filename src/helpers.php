@@ -33,3 +33,10 @@ if (! function_exists('file_override_name_but_preserve_extension')) {
         return $new_name.($extension ? '.'.$extension : '');
     }
 }
+
+if (! function_exists('generate_destination_path')) {
+    function generate_destination_path($destination = null): string
+    {
+        return $destination ?? '';
+    }
+}

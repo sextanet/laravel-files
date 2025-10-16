@@ -47,3 +47,11 @@ test('override name but preserve the extension without new name', function () {
     expect(file_override_name_but_preserve_extension($original_name, null))
         ->toBe('original_name.jpg');
 });
+
+it('generate destination path', function () {
+    expect(generate_destination_path('documents/user'))
+        ->toBe('documents/user');
+
+    expect(generate_destination_path())
+        ->toBe('');
+});

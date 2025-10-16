@@ -29,17 +29,12 @@ trait HasFiles
         return $name.'.'.$extension;
     }
 
-    public function generateDestination($destination = null): string
-    {
-        return $destination ?? '';
-    }
-
     public function storeUploadedFile(UploadedFile $file, ?string $destination = null, ?string $name = null)
     {
         $name_with_extension = $this->generateName($file, $name);
 
         return $file->storeAs(
-            path: $this->generateDestination($destination),
+            path: generate_destination_path($destination),
             name: $name_with_extension,
             options: [
                 'disk' => LaravelFiles::getDisk(),
