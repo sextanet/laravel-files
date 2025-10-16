@@ -23,7 +23,7 @@ trait HasFiles
 
     public function generateName(UploadedFile $file, ?string $name = null): string
     {
-        $name = $name ?? $file->getClientOriginalName();
+        $name = $name ?? file_remove_extension($file->getClientOriginalName());
         $extension = $file->getClientOriginalExtension();
 
         return format_name_with_extension($name.'.'.$extension);
