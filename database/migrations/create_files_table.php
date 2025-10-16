@@ -13,9 +13,9 @@ return new class extends Migration
         Schema::create($table, function (Blueprint $table) {
             $table->ulid('id');
             $table->text('disk');
-            // $table->string('name');
             $table->text('path');
             $table->ulidMorphs('fileable');
+            $table->string('custom_name')->nullable();
             $table->string('type')->nullable();
             $table->softDeletes();
             $table->timestamps();
