@@ -51,7 +51,7 @@ class File extends Model
             ->temporaryUrl($this->attributes['path'], now()->addMinutes($minutes));
     }
 
-    protected function generateTemporaryUrlWithName(int $minutes = 0, string $name)
+    protected function generateTemporaryUrlWithName(int $minutes, string $name)
     {
         return Storage::disk($this->attributes['disk'])
             ->temporaryUrl($this->attributes['path'], now()->addMinutes($minutes), [
