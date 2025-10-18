@@ -37,14 +37,26 @@ class File extends Model
             ->url($this->attributes['path']);
     }
 
-    public function temporaryUrl(int $minutes = 0): string
+    public function temporaryUrl(int $minutes = 0, ?string $name = null, bool $force_download = false): string
     {
         if ($minutes === 0) {
             $minutes = config('files.temporary_url_minutes');
         }
 
+        if ($name) {
+            return $this->generateTemporaryUrlWithName($minutes, $name);
+        }
+
         return Storage::disk($this->attributes['disk'])
             ->temporaryUrl($this->attributes['path'], now()->addMinutes($minutes));
+    }
+
+    protected function generateTemporaryUrlWithName(int $minutes = 0, string $name)
+    {
+        return Storage::disk($this->attributes['disk'])
+            ->temporaryUrl($this->attributes['path'], now()->addMinutes($minutes), [
+                'ResponseContentDisposition' => "attachment; filename={$name}",
+            ]);
     }
 
     public function download(?string $name = null, array $headers = [], $preserveExtension = true)
