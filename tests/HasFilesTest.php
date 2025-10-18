@@ -54,14 +54,14 @@ describe('add file with parameters', function () {
             ->toBe('documents/user/photo.jpg');
     });
 
-    test('with name', function () {
+    test('with custom name', function () {
         $file = $this->model->addFile(
             UploadedFile::fake()->image('photo.jpg'),
-            name: 'custom_name'
+            custom_name: 'file_name'
         );
 
-        expect($file->path)
-            ->toBe('custom_name.jpg');
+        expect($file->custom_name)
+            ->toBe('file_name');
     });
 
     test('with type', function () {

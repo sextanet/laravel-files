@@ -32,7 +32,7 @@ trait HasFiles
         );
     }
 
-    public function addFile(UploadedFile $file, ?string $destination = null, ?string $name = null, ?string $type = null)
+    public function addFile(UploadedFile $file, ?string $destination = null, ?string $name = null, ?string $custom_name = null, ?string $type = null)
     {
         $name = generate_name($file, $name);
 
@@ -41,6 +41,7 @@ trait HasFiles
         return $this->files()->create([
             'disk' => LaravelFiles::getDisk(),
             'path' => $uploaded_file,
+            'custom_name' => $custom_name,
             'type' => $type,
         ]);
     }
