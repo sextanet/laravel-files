@@ -51,11 +51,16 @@ $uploaded_file = request()->your_file; // let's supose you have "a_video.mp4"
 $file = $user->addFile($uploaded_file); // using your default disk from config/filesystems.php
 ```
 
-Passing a destination and name
+#### Passing a destination and a real file name
 
 ```php
+$file = $user->addFile($uploaded_file, destination: 'path/to', name: 'my_file'); // will store on destination/my_file.mp4
+```
 
-$file = $user->addFile($uploaded_file, 'destination', 'my_file'); // will store on destination/my_file.mp4
+#### Passing a custom name on database
+
+```php
+$file = $user->addFile($uploaded_file, custom_name: 'my_file'); // will store the original name, but stores on database with another name
 ```
 
 ### Get
