@@ -24,7 +24,7 @@ trait HasFiles
     public function storeUploadedFile(UploadedFile $file, ?string $destination, string $name)
     {
         return $file->storeAs(
-            path: generate_destination_path($destination),
+            path: laravel_files_generate_destination_path($destination),
             name: $name,
             options: [
                 'disk' => LaravelFiles::getDisk(),
@@ -34,7 +34,7 @@ trait HasFiles
 
     public function addFile(UploadedFile $file, ?string $destination = null, ?string $name = null, ?string $type = null)
     {
-        $name = generate_name($file, $name);
+        $name = laravel_files_generate_name($file, $name);
 
         $uploaded_file = $this->storeUploadedFile($file, $destination, $name);
 

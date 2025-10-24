@@ -50,7 +50,7 @@ class File extends Model
     public function download(?string $name = null, array $headers = [], $preserveExtension = true)
     {
         if ($preserveExtension) {
-            $name = file_override_name_but_preserve_extension(
+            $name = laravel_files_override_name_but_preserve_extension(
                 $this->attributes['path'],
                 $name,
             );
