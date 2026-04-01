@@ -2,6 +2,16 @@
 
 All notable changes to `laravel-files` will be documented in this file.
 
+## 1.1.3 - 2026-04-01
+
+### What's Changed
+
+* feat: add support to Laravel 13 by @sebacarrasco93 in https://github.com/sextanet/laravel-files/pull/10
+* chore(fix-tests): move abstract class to class by @sebacarrasco93 in https://github.com/sextanet/laravel-files/pull/11
+* feat: add support to Laravel 13 by @sebacarrasco93 in https://github.com/sextanet/laravel-files/pull/12
+
+**Full Changelog**: https://github.com/sextanet/laravel-files/compare/1.1.2...1.1.3
+
 ## 1.1.2 - 2025-10-16
 
 ### What's Changed
