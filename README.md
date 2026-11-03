@@ -14,7 +14,7 @@ It supports:
 
 ## Requirements
 
-- Laravel 11+
+- Laravel 12+
 - PHP 8.3+
 
 ## Installation
