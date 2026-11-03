@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-files` will be documented in this file.
 
+## 1.1.4 - 2026-11-03
+
+### What's Changed
+
+* fixes(windows): remove directory separator bug by @sebacarrasco93 in https://github.com/sextanet/laravel-files/pull/13
+* merge: dev into main by @sebacarrasco93 in https://github.com/sextanet/laravel-files/pull/14
+
+**Full Changelog**: https://github.com/sextanet/laravel-files/compare/1.1.3...1.1.4
+
 ## 1.1.3 - 2026-04-01
 
 ### What's Changed
