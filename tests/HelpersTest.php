@@ -2,6 +2,7 @@
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use League\Flysystem\PathTraversalDetected;
 use SextaNet\LaravelFiles\Facades\LaravelFiles;
 
 test('can remove the extension', function () {
@@ -59,6 +60,26 @@ it('generate destination path', function () {
     expect(generate_destination_path())
         ->toBe('');
 });
+
+it('normalizes windows separators in destination path', function () {
+    expect(generate_destination_path('documents\\user'))
+        ->toBe('documents/user');
+
+    expect(generate_destination_path('\\documents\\user\\'))
+        ->toBe('documents/user');
+});
+
+it('normalizes redundant segments in destination path', function () {
+    expect(generate_destination_path('documents//user/./files'))
+        ->toBe('documents/user/files');
+
+    expect(generate_destination_path('documents/tmp/../user'))
+        ->toBe('documents/user');
+});
+
+it('rejects path traversal in destination path', function () {
+    generate_destination_path('../../etc');
+})->throws(PathTraversalDetected::class);
 
 describe('generate name', function () {
     beforeEach(function () {
