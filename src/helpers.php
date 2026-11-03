@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\UploadedFile;
+use League\Flysystem\WhitespacePathNormalizer;
 use SextaNet\LaravelFiles\Facades\LaravelFiles;
 
 if (! function_exists('file_remove_extension')) {
@@ -37,10 +38,17 @@ if (! function_exists('file_override_name_but_preserve_extension')) {
     }
 }
 
+if (! function_exists('normalize_destination_path')) {
+    function normalize_destination_path(string $path): string
+    {
+        return (new WhitespacePathNormalizer)->normalizePath($path);
+    }
+}
+
 if (! function_exists('generate_destination_path')) {
     function generate_destination_path($destination = null): string
     {
-        return $destination ?? '';
+        return normalize_destination_path($destination ?? '');
     }
 }
 
